@@ -6,7 +6,6 @@
 
 (def fields
   #{:byr :iyr :eyr :hgt :hcl :ecl :pid :cid})
-
 (def valid-missing-fields #{:cid})
 
 ;; missing cid is valid, anything else is not
@@ -56,9 +55,7 @@
    (apply hash-map)))
 
 (defn valid-passport? [passport-str]
-  (let [passport-hash (parse-passport passport-str)
-        diff (set/difference fields (set (keys passport-hash)))]
-    (s/valid? ::passport passport-hash)))
+  (s/valid? ::passport (parse-passport passport-str)))
 
 (->> (str/split (slurp (io/resource "day04.txt")) #"\n\n")
      (filter valid-passport?)
