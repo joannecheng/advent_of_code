@@ -13,28 +13,28 @@
   (let [c (count input)]
     (take (/ c 2) input)))
 
-(defn parse-code [seat-str input]
+(defn parse-code [seat-str]
   (loop [seat-str seat-str
-         input input]
+         input (range (Math/pow 2 (count seat-str)))]
     (let [cur-str (first seat-str)]
       (cond
-        (or (= cur-str \L)
-            (= cur-str \F)) (recur (rest seat-str) (take-lower-half input))
-        (or (= cur-str \R)
-            (= cur-str \B)) (recur (rest seat-str) (take-upper-half input))
+        (#{\L \F} cur-str) (recur (rest seat-str) (take-lower-half input))
+        (#{\R \B} cur-str) (recur (rest seat-str) (take-upper-half input))
         :else (first input)))))
 
 (defn decode-row-seat-code [row-seat-code]
   (let [row-code (subs row-seat-code 0 7)
         seat-code (subs row-seat-code 7)]
     (+
-     (* 8 (parse-code row-code (range 128)))
-     (parse-code seat-code (range 8)))))
+     (* 8 (parse-code row-code))
+     (parse-code seat-code))))
 
 (def seats
   (map
    decode-row-seat-code
-   (str/split input #"\n")))
+   (str/split-lines input)))
+
+(apply max seats)
 
 (set/difference
  (set (range 68 965))
