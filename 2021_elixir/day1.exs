@@ -9,16 +9,14 @@ IO.inspect(numbers)
 IO.inspect(Enum.chunk_every(numbers, 2, 1, :discard))
 Day1.test()
 
-IO.puts(
-  List.foldl(
-    Enum.chunk_every(numbers, 2, 1, :discard),
-    0,
-    fn x, acc ->
-      if Enum.at(x, 1) > Enum.at(x, 0) do
-        acc + 1
-      else
-        acc
-      end
+List.foldl(
+  Enum.chunk_every(numbers, 2, 1, :discard),
+  0,
+  fn x, acc ->
+    if Enum.at(x, 1) > Enum.at(x, 0) do
+      acc + 1
+    else
+      acc
     end
-  )
+  end
 )
