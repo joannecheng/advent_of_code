@@ -22,11 +22,31 @@
 
 (partition 2 1 test-input)
 
-(->> input
+(->> test-input
      (partition 2 1)
      (filter (fn [[a b]] (> b a)))
      count)
 
+;; Part 1 without partition
+(reduce
+ (fn [[prev acc] curr]
+   (if (> curr prev)
+     [curr (inc acc)]
+     [curr  acc]))
+ [9999999 0]
+ test-input)
+
+;; Part 2 without partition
+(reduce
+ (fn [[prev-window acc] curr]
+   (if (> curr prev)
+     [curr (inc acc)]
+     [curr  acc]))
+ [9999999 0]
+ test-input)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (->> (partition 3 1 test-input)
      vec)
 
@@ -37,7 +57,7 @@
 
 
 ;; Part 2
-(loop [in input
+(loop [in test-input
        increased-cnt 0]
   (let [numbers (take 4 in)
         increased? (fn [[a b c d]] (< (+ a b c) (+ b c d)))]
@@ -45,4 +65,5 @@
       (cond-> increased-cnt (increased? numbers) inc)
       (recur (vec (rest in))
              (cond-> increased-cnt (increased? numbers) inc)))))
-;; => 1248
+;; => 5
+
