@@ -54,5 +54,18 @@
 
 (defn part2 [input]
   ;; Brute force
-  (apply min (map (partial calc-distance-2 test-input) (range 0 10)))
-  (apply min (map (partial calc-distance-2 input) (range 0 1000))))
+  #_(apply min (map (partial calc-distance-2 test-input) (range 0 10)))
+  #_(apply min (map (partial calc-distance-2 input) (range 0 1000)))
+
+  ;; Calculating the mean and flat out guessing ¯\_(ツ)_/¯
+  (let [m (mean input)
+        to-test (range (dec m) (inc m))]
+    (apply min (map (partial calc-distance-2 input) to-test))))
+
+(time
+ (part2 input))
+;; => 1.00148777E8
+
+;; Brute force: "Elapsed time: 2469.565993 msecs"
+;; Mean guessing: "Elapsed time: 5.37026 msecs"
+
