@@ -1,6 +1,7 @@
 (ns advent.day03
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clojure.set :as set]))
 
 (def row-l 5)
 
@@ -19,7 +20,6 @@
         test-nums (-> (first input-as-str)
                       (str/split #","))
         test-nums (mapv read-string test-nums)]
-
     [test-nums (parse-boards (drop 2 input-as-str))]))
 
 (input (slurp (io/resource "day04.txt")))
@@ -107,7 +107,6 @@
         (+ %1 (number-at-pos board %2)))
      0
      every-pos)))
-
 
 (defn calculate-winning-board
   ([boards board-matches index last-num]
